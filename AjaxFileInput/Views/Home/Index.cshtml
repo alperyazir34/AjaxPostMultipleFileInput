@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<html>
+<head>
+   @section Script{
+
+        <link href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/bower_components/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+      
+       <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+        <style type="text/css">
+            .fade {
+                opacity: 1;
+            }
+
+
+            .modal-dialog {
+                left: 0%;
+            }
+
+            .input-group-addon, .input-group-btn, .input-group .form-control {
+                display: inline-table;
+            }
+
+            .input-group > .custom-select:not(:last-child), .input-group > .form-control:not(:last-child) {
+                height: 40.5px;
+            }
+        </style>
+    }
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-3 mb-3">
+            <div id="alert" class="col-12 alert alert-success" style="display:none;">
+                Dosyalar Yüklendi
+            </div>
+            <div class="col-12">
+                <form action="" method="post" enctype="multipart/form-data" >
+                    <input type="hidden" id="ProductID" name="ProductID" value="2" />
+                    <input type="file" id="files" name="files" multiple />
+                </form>
+               
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+    <script>
+        $("#files").fileinput({
+            language: 'tr',
+            uploadAsync: true,
+            dropZoneTitle: "Resimlerinizi buraya bırakabilirisniz",
+            browseLabel: "Resim Seçiniz",  // Upload Buton text
+            uploadLabel: "Karşıya Yükle", // resim seçildikten Sonra Upload Butonu Text
+            uploadUrl:"@Url.Action("Index","Home")", // Post Olacağı URL
+            allowedFileExtension: ['jpg', 'png', 'gif'], //sadece belirliten dosya formatlarını kabul eder
+            maxFileCount: 10, // tek seferde max 10 resim yüklwywbilie
+            resizeImage:true, // hata vermeden boyutlandırmayı yap
+            maxImageWidth: 800, // Maximum Resim Genişliği
+            maxImageHeight: 600, // Maksimum Resim Yüksekliği
+            resizePreference: 'width', //genişliğe göre resim yüksekliği ayarlar
+            resizeImageQuality: 0.75, // Kalitesine otomatik ayarlar
+            uploadExtraData: { id: $("#ProductID").val() }
+
+        });
+
+        $("#files").on('filebatchuploadcomplete', function () {// files success olduğunda
+            $("#alert").css({ "display": "block" }); // alert id li div style ını display:block yap
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
